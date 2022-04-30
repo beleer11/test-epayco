@@ -34,7 +34,7 @@ composer install
 El sistema envia correos atravez de la libreria PHPMailer, debera configurar el correo gmail de preferencia para configurar las contraseñas de aplicaciones de gmail. Alli tendra que colocar con el nombre de PHPMailer. 
 ```
 ```sh 
-Dentro del correo se encuentra la collecion de postman llamada: test-epayco.postman_collection
+Dentro del correo se encuentra la coleccion de postman llamada: test-epayco.postman_collection
 ```
 
 5. En la raíz del sitio ejecutar.
