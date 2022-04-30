@@ -16,7 +16,7 @@ class CreateClientTable extends Migration
         Schema::create('client', function (Blueprint $table) {
             $table->bigIncrements("id")->comment("id registro");
             $table->string("name", 30)->comment("Nombre cliente");
-            $table->string("document_number", 20)->comment("Numero documento cliente");
+            $table->string("document_number", 20)->comment("Numero documento cliente")->unique();
             $table->string("age", 10)->comment("Edad cliente");
             $table->string("cel", 20)->comment("Telefono celular cliente");
             $table->string("email", 30)->comment("Email cliente");

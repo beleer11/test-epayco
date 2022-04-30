@@ -15,8 +15,8 @@ class CreateWalletTable extends Migration
     {
         Schema::create('wallet', function (Blueprint $table) {
             $table->bigIncrements("id")->comment("id registro");
-            $table->bigInteger("saldo")->comment("Saldo tarjeta");
-            $table->string("card_number", 30)->comment("Numero tarjeta");
+            $table->double("saldo")->comment("Saldo tarjeta");
+            $table->string("card_number", 30)->comment("Numero tarjeta")->unique();
             $table->unsignedBigInteger("client_id")->comment("Id del cliente propietario de la tarjeta");
             $table->softDeletes();
             $table->timestamps();

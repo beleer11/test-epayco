@@ -4,62 +4,79 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @description Consultar todos o un cliente/s con excepcion los que tienen borrado logico.
      *
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return JsonResponse
      */
-    public function index()
+    public function getClient($id = null): JsonResponse
     {
-        //
+        try {
+            $client = Client::withoutTrashed();
+
+            if(!is_null($id)){
+                $client = $client->where("id", $id);
+            }
+
+            return response()->json([
+                "success"   => true,
+                "cod_error" => "00",
+                "message_error"   => $client->get()
+            ]);
+        } catch (\Exception $e){
+            return response()->json([
+                "success"   => false,
+                "cod_error" => $e->getCode(),
+                "message_error"   => $e->getMessage()
+            ]);
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @description Guardar los nuevos clientes del sistema.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function clientRegistration(Request $request): JsonResponse
     {
-        //
-    }
+        try {
+            DB::beginTransaction();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Client $client)
-    {
-        //
-    }
+            //se crea nuevo registro
+            $client = new Client();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Client $client)
-    {
-        //
-    }
+            $client->name               = $request->input("name");
+            $client->document_number    = $request->input("document_number");
+            $client->age                = $request->input("age");
+            $client->cel                = $request->input("cel");
+            $client->email              = $request->input("email");
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Client $client)
-    {
-        //
+            $client->save();
+
+            DB::commit();
+
+            return response()->json([
+                "success"   => true,
+                "cod_error" => "00",
+                "message_error"   => "Se creo el usuario ". $request->input("name") . ", exitosamente."
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                "success"   => false,
+                "cod_error" => $e->getCode(),
+                "message_error"   => $e->getMessage()
+            ]);
+        }
+
     }
 }

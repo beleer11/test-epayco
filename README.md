@@ -1,64 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Prueba de una billetera electronica
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+_Prueba de desarrollo para Epayco._
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Instalación
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Clonar el repositorio.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```sh 
+git clone https://github.com/beleer11/test-epayco.git
+```
 
-## Learning Laravel
+2. Instalar dependencias.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```sh 
+composer install
+```
+3. Crear BD, ejemplo.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```sh 
+`CREATE DATABASE test_epayco COLLATE 'utf8mb4_general_ci';`
+```
 
-## Laravel Sponsors
+4. Duplique el archivo `.env.example` incluido en uno de nombre `.env` y dentro de este ingrese los valores de las variables de entorno necesarias, las básicas serían las siguientes:
+- `DB_HOST="value"` Variable de entorno para el host de BD.
+- `DB_PORT="value"` Variable de entorno para el puerto de BD.
+- `DB_DATABASE="value"` Variable de entorno para el nombre de BD.
+- `DB_USERNAME="value"` Variable de entorno para el usuario de BD.
+- `DB_PASSWORD="value"` Variable de entorno para la contraseña de BD.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+##### Notas:
+```sh 
+El sistema envia correos atravez de la libreria PHPMailer, debera configurar el correo gmail de preferencia para configurar las contraseñas de aplicaciones de gmail. Alli tendra que colocar con el nombre de PHPMailer. 
+```
 
-### Premium Partners
+5. En la raíz del sitio ejecutar.
+- `composer require phpmailer/phpmailer` Libreria de PhpMailer
+- `php artisan migrate` Crea la estructura de BD. 
+- `php artisan serve` Arranca el servidor web bajo la url [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+##### Nota:
+6. En la raíz del sitio usar este comando si se desea ejecutar las pruebas.
+```sh 
+vendor/bin/phpunit
+```
 
-## Contributing
+## Descripción general de las URL's 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```sh 
+Recuerde que las endpoint fueron almacenadas en el archivo routes/api.php
+```
+Método|URL|Descripción
+ ------ | ------ | ------ 
+GET|client/getClient/__{id}__|Consulta todos los clientes activos.
+POST|client/clientRegistration|Registra clientes nuevos.
+POST|wallet/createWallet|Crea nuevas billeteras virtuales.
+POST|wallet/rechargeWallet|Recarga la billetera con dinero.
+POST|wallet/checkBalance|Consulta el saldo de la billetera.
+POST|transaction/payment|Ejecuta el pago.
+POST|transaction/paymentConfirm|Confirma el pago realizado anteriormente.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+##### Nota: 
+- El parámetro __{id}__ Id de la notificación, debe ser numérico.
 
-## Security Vulnerabilities
+## Usuarios de prueba disponibles.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Email|Password|Rol|Permisos
+ ------ | ------ | ------ | ------
+mussebrahiam11@gmail.com|123456|Admin|Tiene toda la configuración de enviar correos.
 
-## License
+##### Nota: 
+Para configurar su propio usuario de correos debe modificar el archivo App/Services/EmailService.php.
+## Autor️ 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* **Brahiam Musse** [mussebrahiam11@gmail.com](mailto:mussebrahiam11@gmail.com)
+
+
+------------------------
