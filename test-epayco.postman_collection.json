@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "6d2cf3a0-e71b-42d7-a313-b295a4d37374",
+		"name": "test-epayco",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Crear clientes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-hardik",
+								"value": "api-key-epayco",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Brahiam Musse\",\r\n    \"document_number\": \"1111111\",\r\n    \"age\": \"22\",\r\n    \"cel\": \"3222755825\",\r\n    \"email\": \"mussebrahiam11@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/client/clientRegistration",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"clientRegistration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar clientes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-hardik",
+								"value": "api-key-epayco",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/client/getClient",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"getClient"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Billetera",
+			"item": [
+				{
+					"name": "Crear billetera",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-hardik",
+								"value": "api-key-epayco",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"card_number\": \"12345678\",\r\n    \"client_id\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/wallet/createWallet",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"wallet",
+								"createWallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recargar billetera",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-hardik",
+								"value": "api-key-epayco",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"10000000\",\r\n    \"document_number\": \"1111111\",\r\n    \"cel\": \"3222755825\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/wallet/rechargeWallet",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"wallet",
+								"rechargeWallet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Saldo Billetera",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-hardik",
+								"value": "api-key-epayco",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\": \"10000000\",\r\n    \"document_number\": \"1111111\",\r\n    \"cel\": \"3222755825\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/wallet/rechargeWallet",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"wallet",
+								"rechargeWallet"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaccion",
+			"item": [
+				{
+					"name": "Pago",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-hardik",
+								"value": "api-key-epayco",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"card_number\": \"12345678\",\r\n    \"pay_value\": \"20000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/transaction/payment",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirmar Pago",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-hardik",
+								"value": "api-key-epayco",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"card_number\": \"12345678\",\r\n    \"pay_value\": \"20000\",\r\n    \"token\": \"425d83\",\r\n    \"session_id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/transaction/paymentConfirm",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"paymentConfirm"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
